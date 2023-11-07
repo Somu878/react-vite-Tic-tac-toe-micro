@@ -8,7 +8,7 @@
 }
 .q{
     font-size: 26px;
-    padding-top: 10px;
+    padding-top: 20px;
     color: #31C4BE;
     font-family: 'DM Sans', sans-serif;
 }
@@ -31,8 +31,4 @@
     background-image: url('../../src/assets/squares.png');
     background-repeat: no-repeat;
     background-position: center;
-}
-.ecllipse :hover{
-    cursor: pointer;
-    
 }
