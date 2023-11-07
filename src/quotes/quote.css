@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,800&display=swap');
+.quotecomponent{
+    background-color: #192A32;
+    width: 290px;
+    height: 282px;
+    border-radius: 15px;
+    text-align: center;
+}
+.q{
+    font-size: 26px;
+    padding-top: 10px;
+    color: #31C4BE;
+    font-family: 'DM Sans', sans-serif;
+}
+.quote{
+    font-size: 24px;
+    color: #F2B237;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 30px;
+    padding: 0px 40px 0px 40px;
+}
+.ecllipse {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    background-color: #31C4BE;
+    background-image: url('../../src/assets/squares.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.ecllipse :hover{
+    cursor: pointer;
+    
+}
