@@ -14,7 +14,7 @@ function Quote() {
         const interval = setInterval(() => {
             setQuoteNumber(prevNumber => prevNumber + 1);
             fetchQuoteDelay();
-        }, 60000);
+        }, 120000);
         return () => {
             clearInterval(interval);
         };

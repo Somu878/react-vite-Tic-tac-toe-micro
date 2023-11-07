@@ -12,6 +12,13 @@ body {
 }
 .quotecomponent{
   position: relative;
-  left: 68px;
-  top: 508px;
+  left: 120px;
+  top: 510px;
 }
+
+.gamecomponent{
+  position: absolute;
+  right: 500px;
+  bottom: 42px;
+}
+

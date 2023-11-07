@@ -4,12 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import Quote from './quotes/quote'
+import Game from './game/game'
 function App() {
 
   return (
     <>
-      hello all
       <Quote/>
+      <Game/>
     </>
   )
 }
