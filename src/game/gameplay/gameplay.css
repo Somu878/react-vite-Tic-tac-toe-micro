@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,800&display=swap");
+
+:root {
+  --dmsans: "DM Sans", sans-serif;
+  --bglight: #1f3540;
+}
+
+.xo {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 168px;
+  left: 53px;
+  transform: scale(0.6);
+}
+
+.turn {
+  position: absolute;
+  font-family: var(--dmsans);
+  background-color: var(--bglight);
+  color: #a8bec9;
+  width: 86px;
+  height: 39px;
+  border-radius: 10px;
+  text-align: center;
+  top: 165px;
+  left: 165px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resetbtn {
+  position: absolute;
+  background-color: #a8bec9;
+  background-image: url("../../assets/reset.png");
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-position: center;
+  border: none;
+  top: 172px;
+  left: 320px;
+}
+
+.gamesection {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  position: absolute;
+  top: 230px;
+  left: 55px;
+}
+
+.square {
+  background-color: var(--bglight);
+  width: 86px;
+  height: 86px;
+  border: none;
+  border-radius: 10px;
+}
+.scoresection{
+    display: flex;
+}
+.xscore,.oscore,.tie{
+    width: 86px;
+    height: 49px;
+    border-radius: 10px;
+    font-family: var(--dmsans);
+    font-size: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.xs,.os,.ties{
+    font-size: 14px;
+}
+
+.xscore{
+    background-color: #31C4BE;
+    position: absolute;
+    top: 570px;
+    left: 55px;
+}
+
+.oscore{
+    background-color: #F2B237;
+    position: absolute;
+    top: 570px;
+    left: 278px;
+}
+.tie{
+    background-color: #A8BEC9;
+    position: absolute;
+    top: 570px;
+    left: 168px;
+}
