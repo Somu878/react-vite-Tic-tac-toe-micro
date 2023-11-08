@@ -52,9 +52,9 @@ function Gameplay() {
     setSquares(newSquares);
     setXnext(!Xnext);
 
-    const emptySquares = newSquares.reduce((acc, value, idx) => {
+    const emptySquares = newSquares.reduce((acc, value, ind) => {
       if (!value) {
-        acc.push(idx);
+        acc.push(ind);
       }
       return acc;
     }, []);
