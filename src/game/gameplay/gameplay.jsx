@@ -83,7 +83,7 @@ function Gameplay() {
         <div id="x"></div>
         <div id="o"></div>
       </div>
-      <div className="turn">X TURN</div>
+      <div className="{human}turn">X TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
         <Square value={squares[0]} handleclick={() => XonClick(0)} />
