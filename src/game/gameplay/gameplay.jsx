@@ -37,7 +37,6 @@ const cpuFromLocalStorage = localStorage.getItem('cpu');
 const human = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <X /> : <O />;
 const cpu = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <O /> : <X />;
 
-
 function Square({ value, handleclick }) {
   return (
     <button className="square" onClick={handleclick}>
@@ -83,7 +82,7 @@ function Gameplay() {
         <div id="x"></div>
         <div id="o"></div>
       </div>
-      <div className="{human}turn">X TURN</div>
+      <div className="turn">{humanFromLocalStorage}'s TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
         <Square value={squares[0]} handleclick={() => XonClick(0)} />
