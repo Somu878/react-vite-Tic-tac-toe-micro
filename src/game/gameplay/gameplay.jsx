@@ -32,6 +32,12 @@ const O = styled.div`
   transform: scale(0.7);
 `;
 
+const humanFromLocalStorage = localStorage.getItem('human');
+const cpuFromLocalStorage = localStorage.getItem('cpu');
+const human = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <X /> : <O />;
+const cpu = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <O /> : <X />;
+
+
 function Square({ value, handleclick }) {
   return (
     <button className="square" onClick={handleclick}>
@@ -41,16 +47,16 @@ function Square({ value, handleclick }) {
 }
 function Gameplay() {
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [Xnext, setXnext] = useState(true);
+  const [currPlayer, setcurrPlayer] = useState(!cpu); //Check 1 false for O
   const XonClick = (index) => {
     if (squares[index]) {
       return;
     }
 
     const newSquares = squares.slice();
-    newSquares[index] = Xnext ? <X /> : <O />;
+    newSquares[index] = currPlayer ? cpu: human;
     setSquares(newSquares);
-    setXnext(!Xnext);
+    setcurrPlayer(!currPlayer);
 
     const emptySquares = newSquares.reduce((acc, value, ind) => {
       if (!value) {
@@ -62,12 +68,15 @@ function Gameplay() {
     const randomIndex = Math.floor(Math.random() * emptySquares.length);
     const cpuMove = emptySquares[randomIndex];
     if (cpuMove !== undefined) {
-      newSquares[cpuMove] = <O />;
+      newSquares[cpuMove] =cpu;
       setSquares(newSquares);
-      setXnext(true);
+      setcurrPlayer(!human);
     }
   };
-
+  const restartGame = ()=>{
+    setSquares([...Array(9).keys()].map(() => null))
+    setcurrPlayer(false)  //check 2 false for O
+  }
   return (
     <div className="gameplay">
       <div className="xo">
@@ -75,7 +84,7 @@ function Gameplay() {
         <div id="o"></div>
       </div>
       <div className="turn">X TURN</div>
-      <button className="resetbtn"></button>
+      <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
         <Square value={squares[0]} handleclick={() => XonClick(0)} />
         <Square value={squares[1]} handleclick={() => XonClick(1)} />
@@ -89,7 +98,7 @@ function Gameplay() {
       </div>
       <div className="scoresection">
         <div className="xscore">
-          <div className="x">X (YOU)</div>
+          <div className="x"> (YOU)</div>
           <div className="xs">0</div>
         </div>
         <div className="tie">
@@ -97,7 +106,7 @@ function Gameplay() {
           <div className="ties">0</div>
         </div>
         <div className="oscore">
-          <div className="o">O (CPU)</div>
+          <div className="o"> (CPU)</div>
           <div className="os">0</div>
         </div>
       </div>

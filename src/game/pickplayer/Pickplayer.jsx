@@ -21,12 +21,19 @@ function Pickplayer() {
         <div className='pickplaybtns'>
             <div className='title'>PICK PLAYER</div>
             <div className='xobtns'>
-              <button id='xbtn'>O</button>
-              <button id='obtn'>X</button>
+              <button id='xbtn' onClick={()=>{
+                localStorage.setItem("human", 'O');
+                localStorage.setItem('cpu','X')
+
+              }}>O</button>
+              <button id='obtn'onClick={()=>{
+                localStorage.setItem("human", 'X');
+                localStorage.setItem('cpu','O')
+              }} >X</button>
             </div>
         </div>
         <button className='ngvscpu'>NEW GAME (VS CPU)</button>
-        <button className='ngvshuman'>NEW GAME (VS HUMAN) coming soon</button>
+        <button className='ngvshuman'>NEW GAME (VS HUMAN) Coming soon</button>
         <button className='invitefriend' onClick={inviteToast}>Invite your friend</button>
         <ToastContainer/>
     </div>
