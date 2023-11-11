@@ -82,7 +82,7 @@ function Gameplay() {
         <div id="x"></div>
         <div id="o"></div>
       </div>
-      <div className="turn">{humanFromLocalStorage}'s TURN</div>
+      <div className="turn">{humanFromLocalStorage}' TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
         <Square value={squares[0]} handleclick={() => XonClick(0)} />
@@ -97,7 +97,7 @@ function Gameplay() {
       </div>
       <div className="scoresection">
         <div className="xscore">
-          <div className="x"> (YOU)</div>
+          <div className="x">{humanFromLocalStorage} (YOU)</div>
           <div className="xs">0</div>
         </div>
         <div className="tie">
@@ -105,7 +105,7 @@ function Gameplay() {
           <div className="ties">0</div>
         </div>
         <div className="oscore">
-          <div className="o"> (CPU)</div>
+          <div className="o">{cpuFromLocalStorage} (CPU)</div>
           <div className="os">0</div>
         </div>
       </div>

@@ -1,14 +1,19 @@
-import React from 'react'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Pickplayer from './pickplayer/Pickplayer';
+import Gameplay from './gameplay/gameplay';
 import './game.css'
-import Pickplayer from './pickplayer/Pickplayer'
-import Gameplay from './gameplay/gameplay'
 function Game() {
   return (
     <div className='gamecomponent'>
-        {/* <Pickplayer/> */}
-        <Gameplay/>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Pickplayer />} />
+          <Route path="/gameplay" element={<Gameplay />} />
+        </Routes>
+      </Router>
     </div>
-  )
+  );
 }
 
-export default Game
+export default Game;

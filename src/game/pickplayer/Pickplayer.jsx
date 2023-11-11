@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './pickplayer.css'
@@ -32,7 +33,9 @@ function Pickplayer() {
               }} >X</button>
             </div>
         </div>
-        <button className='ngvscpu'>NEW GAME (VS CPU)</button>
+        <Link to='/gameplay'>
+        <button className='ngvscpu' >NEW GAME (VS CPU)</button>
+        </Link>
         <button className='ngvshuman'>NEW GAME (VS HUMAN) Coming soon</button>
         <button className='invitefriend' onClick={inviteToast}>Invite your friend</button>
         <ToastContainer/>
