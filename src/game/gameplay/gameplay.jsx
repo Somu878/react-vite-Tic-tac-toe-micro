@@ -47,16 +47,20 @@ function Square({ value, handleclick }) {
 function Gameplay() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setcurrPlayer] = useState(!cpu); //Check 1 false for O
+  const [gameOver, setGameOver] = useState(false);
   const XonClick = (index) => {
-    if (squares[index]) {
+    if (squares[index] || gameOver) {
       return;
     }
-
+   
     const newSquares = squares.slice();
     newSquares[index] = currPlayer ? cpu: human;
     setSquares(newSquares);
     setcurrPlayer(!currPlayer);
-
+    let winner = calculateWinner(newSquares)
+    if(winner){
+     setGameOver(true)
+    }
     const emptySquares = newSquares.reduce((acc, value, ind) => {
       if (!value) {
         acc.push(ind);
@@ -72,9 +76,32 @@ function Gameplay() {
       setcurrPlayer(!human);
     }
   };
+  const calculateWinner = (squares) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+  
+    for (const line of lines) {
+      const [a, b, c] = line;
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+  
+    return null;
+  };
+  
   const restartGame = ()=>{
     setSquares([...Array(9).keys()].map(() => null))
     setcurrPlayer(false)  //check 2 false for O
+    setGameOver(false)
   }
   return (
     <div className="gameplay">
