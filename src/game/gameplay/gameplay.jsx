@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
 import "./gameplay.css";
+
 const X = styled.div`
   width: 50px;
   height: 50px;
@@ -23,6 +23,7 @@ const X = styled.div`
     50% 30%
   );
 `;
+
 const O = styled.div`
   width: 50px;
   height: 50px;
@@ -32,50 +33,60 @@ const O = styled.div`
   transform: scale(0.7);
 `;
 
-const humanFromLocalStorage = localStorage.getItem('human');
-const cpuFromLocalStorage = localStorage.getItem('cpu');
-const human = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <X /> : <O />;
-const cpu = humanFromLocalStorage === 'X' || cpuFromLocalStorage === 'O' ? <O /> : <X />;
-
 function Square({ value, handleclick }) {
+  useEffect(()=>{},[])
   return (
     <button className="square" onClick={handleclick}>
       {value}
     </button>
   );
 }
+const humanFromLocalStorage = localStorage.getItem("human");
+const cpuFromLocalStorage = localStorage.getItem("cpu");
+const human =
+  humanFromLocalStorage === "X" || cpuFromLocalStorage === "O" ? <X /> : <O />;
+const cpu =
+  humanFromLocalStorage === "X" || cpuFromLocalStorage === "O" ? <O /> : <X />;
 function Gameplay() {
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [currPlayer, setcurrPlayer] = useState(!cpu); //Check 1 false for O
+  const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
   const XonClick = (index) => {
-    if (squares[index] || gameOver) {
+    if (gameOver || squares[index]) {
       return;
     }
-   
+    
     const newSquares = squares.slice();
-    newSquares[index] = currPlayer ? cpu: human;
+    newSquares[index] = currPlayer ? cpu : human;
     setSquares(newSquares);
-    setcurrPlayer(!currPlayer);
-    let winner = calculateWinner(newSquares)
-    if(winner){
-     setGameOver(true)
+    setCurrPlayer(!currPlayer);
+
+    const winner = calculateWinner(newSquares);
+    if (winner) {
+      setGameOver(true);
+      console.log(winner);
+      return;
     }
+ 
     const emptySquares = newSquares.reduce((acc, value, ind) => {
       if (!value) {
         acc.push(ind);
       }
       return acc;
     }, []);
-
+    if (emptySquares.length === 0) {
+      setGameOver(true);
+      return;
+    }
     const randomIndex = Math.floor(Math.random() * emptySquares.length);
     const cpuMove = emptySquares[randomIndex];
     if (cpuMove !== undefined) {
-      newSquares[cpuMove] =cpu;
+      newSquares[cpuMove] = cpu;
       setSquares(newSquares);
-      setcurrPlayer(!human);
+      setCurrPlayer(!human);
     }
   };
+
   const calculateWinner = (squares) => {
     const lines = [
       [0, 1, 2],
@@ -87,29 +98,30 @@ function Gameplay() {
       [0, 4, 8],
       [2, 4, 6],
     ];
-  
+
     for (const line of lines) {
       const [a, b, c] = line;
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
         return squares[a];
       }
     }
-  
+
     return null;
   };
-  
-  const restartGame = ()=>{
-    setSquares([...Array(9).keys()].map(() => null))
-    setcurrPlayer(false)  //check 2 false for O
-    setGameOver(false)
-  }
+
+  const restartGame = () => {
+    setSquares([...Array(9).keys()].map(() => null));
+    setCurrPlayer(false); // false for O
+    setGameOver(false);
+  };
+
   return (
     <div className="gameplay">
       <div className="xo">
         <div id="x"></div>
         <div id="o"></div>
       </div>
-      <div className="turn">{humanFromLocalStorage}' TURN</div>
+      <div className="turn">{humanFromLocalStorage}'s TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
         <Square value={squares[0]} handleclick={() => XonClick(0)} />
