@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './pickplayer.css'
+import { Xbtnhandle,Obtnhandle } from '../../redux/PickplayerSlice';
+import { useSelector, useDispatch } from 'react-redux'
 function Pickplayer() {
   const inviteToast=()=>{
     toast("Invite link copied",{
@@ -13,6 +15,16 @@ function Pickplayer() {
       className: 'invite-toast'
     })
   }
+  const human = useSelector((state)=>state.pickplayer.human)
+  const cpu = useSelector((state)=>state.pickplayer.cpu)
+  const dispatch = useDispatch()
+  const handleXClick = () => {
+    dispatch(Xbtnhandle());
+  };
+
+  const handleOClick = () => {
+    dispatch(Obtnhandle());
+  };
   return (
     <div className='pickplayer' >
         <div className='logo'>
@@ -22,21 +34,17 @@ function Pickplayer() {
         <div className='pickplaybtns'>
             <div className='title'>PICK PLAYER</div>
             <div className='xobtns'>
-              <button id='xbtn' onClick={()=>{
-                localStorage.setItem("human", 'O');
-                localStorage.setItem('cpu','X')
-
-              }}>O</button>
-              <button id='obtn'onClick={()=>{
-                localStorage.setItem("human", 'X');
-                localStorage.setItem('cpu','O')
-              }} >X</button>
+              <button id='xbtn' onClick={handleOClick}>O</button>
+              <button id='obtn'onClick={handleXClick} >X</button>
             </div>
         </div>
         <Link to='/gameplay'>
         <button className='ngvscpu' >NEW GAME (VS CPU)</button>
         </Link>
-        <button className='ngvshuman'>NEW GAME (VS HUMAN) Coming soon</button>
+        <button className='ngvshuman' onClick={()=>{
+          console.log(human);
+          console.log(cpu);
+        }}>NEW GAME (VS HUMAN) Coming soon</button>
         <button className='invitefriend' onClick={inviteToast}>Invite your friend</button>
         <ToastContainer/>
     </div>

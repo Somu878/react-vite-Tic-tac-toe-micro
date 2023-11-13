@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import "./gameplay.css";
-
 const X = styled.div`
   width: 50px;
   height: 50px;
@@ -33,30 +33,55 @@ const O = styled.div`
   transform: scale(0.7);
 `;
 
-function Square({ value, handleclick }) {
-  useEffect(()=>{},[])
+function Square({ value, onClick }) {
   return (
-    <button className="square" onClick={handleclick}>
+    <button className="square" onClick={onClick}>
       {value}
     </button>
   );
 }
-const humanFromLocalStorage = localStorage.getItem("human");
-const cpuFromLocalStorage = localStorage.getItem("cpu");
-const human =
-  humanFromLocalStorage === "X" || cpuFromLocalStorage === "O" ? <X /> : <O />;
-const cpu =
-  humanFromLocalStorage === "X" || cpuFromLocalStorage === "O" ? <O /> : <X />;
+const human = <X />;
+const cpu = <O />;
+const humanFromRedux = "X";
+const cpuFromRedux = "O";
+// localStorage.setItem('humanScore','0')
+// localStorage.setItem('cpuScore','0')
+
 function Gameplay() {
+  // const humanFromRedux = useSelector((state) => state.pickplayer.human);
+  // const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
+
+  // const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
+  // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
+
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
+  const [hscore, setHscore] = useState(() => {
+    const storedHscore = localStorage.getItem("humanScore");
+    return storedHscore ? parseInt(storedHscore, 10) : 0;
+  });
+  const [cpscore, setCpscore] = useState(() => {
+    const storedCpscore = localStorage.getItem("cpuScore");
+    return storedCpscore ? parseInt(storedCpscore, 10) : 0;
+  });
+  const [tieScore, settieScore] = useState(() => {
+    const storedTieScore = localStorage.getItem("tieScore");
+    return storedTieScore ? parseInt(storedTieScore, 10) : 0;
+  });
+
+  // Update local storage when scores change
+  useEffect(() => {
+    localStorage.setItem("humanScore", hscore.toString());
+    localStorage.setItem("cpuScore", cpscore.toString());
+    localStorage.setItem("tieScore", tieScore.toString());
+  }, [hscore, cpscore, tieScore]);
   const XonClick = (index) => {
     if (gameOver || squares[index]) {
       return;
     }
-    
-    const newSquares = squares.slice();
+
+    const newSquares = [...squares];
     newSquares[index] = currPlayer ? cpu : human;
     setSquares(newSquares);
     setCurrPlayer(!currPlayer);
@@ -64,26 +89,41 @@ function Gameplay() {
     const winner = calculateWinner(newSquares);
     if (winner) {
       setGameOver(true);
-      console.log(winner);
+      if (!currPlayer) {
+        setHscore(hscore+1)
+      } else {
+        setCpscore(cpscore+1)
+      }
       return;
     }
- 
+
     const emptySquares = newSquares.reduce((acc, value, ind) => {
       if (!value) {
         acc.push(ind);
       }
       return acc;
     }, []);
+
     if (emptySquares.length === 0) {
       setGameOver(true);
+      settieScore(tieScore+1)
       return;
     }
+
     const randomIndex = Math.floor(Math.random() * emptySquares.length);
     const cpuMove = emptySquares[randomIndex];
     if (cpuMove !== undefined) {
       newSquares[cpuMove] = cpu;
       setSquares(newSquares);
       setCurrPlayer(!human);
+    }
+    const cpuWinner = calculateWinner(newSquares);
+    if (cpuWinner) {
+      if (currPlayer) {
+        setHscore(hscore+1)
+      } else {
+        setCpscore(cpscore+1)
+      }
     }
   };
 
@@ -101,16 +141,20 @@ function Gameplay() {
 
     for (const line of lines) {
       const [a, b, c] = line;
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
+        return squares[a]; // Return the symbol of the winner ('X' or 'O')
       }
     }
 
-    return null;
+    return null; // Return null if there is no winner
   };
 
   const restartGame = () => {
-    setSquares([...Array(9).keys()].map(() => null));
+    setSquares(Array(9).fill(null));
     setCurrPlayer(false); // false for O
     setGameOver(false);
   };
@@ -121,31 +165,25 @@ function Gameplay() {
         <div id="x"></div>
         <div id="o"></div>
       </div>
-      <div className="turn">{humanFromLocalStorage}'s TURN</div>
+      <div className="turn">{humanFromRedux}'s TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
       <div className="gamesection">
-        <Square value={squares[0]} handleclick={() => XonClick(0)} />
-        <Square value={squares[1]} handleclick={() => XonClick(1)} />
-        <Square value={squares[2]} handleclick={() => XonClick(2)} />
-        <Square value={squares[3]} handleclick={() => XonClick(3)} />
-        <Square value={squares[4]} handleclick={() => XonClick(4)} />
-        <Square value={squares[5]} handleclick={() => XonClick(5)} />
-        <Square value={squares[6]} handleclick={() => XonClick(6)} />
-        <Square value={squares[7]} handleclick={() => XonClick(7)} />
-        <Square value={squares[8]} handleclick={() => XonClick(8)} />
+        {squares.map((value, index) => (
+          <Square key={index} value={value} onClick={() => XonClick(index)} />
+        ))}
       </div>
       <div className="scoresection">
         <div className="xscore">
-          <div className="x">{humanFromLocalStorage} (YOU)</div>
-          <div className="xs">0</div>
+          <div className="x">{humanFromRedux} (YOU)</div>
+          <div className="xs">{hscore}</div>
         </div>
         <div className="tie">
           <div className="tiescore">TIE</div>
-          <div className="ties">0</div>
+          <div className="ties">{tieScore}</div>
         </div>
         <div className="oscore">
-          <div className="o">{cpuFromLocalStorage} (CPU)</div>
-          <div className="os">0</div>
+          <div className="o">{cpuFromRedux} (CPU)</div>
+          <div className="os">{cpscore}</div>
         </div>
       </div>
     </div>
