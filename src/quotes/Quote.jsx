@@ -12,7 +12,7 @@ function Quote() {
         };
         fetchQuoteDelay();
         const interval = setInterval(() => {
-            setQuoteNumber(prevNumber => prevNumber + 1);
+            setQuoteNumber(prevNum => prevNum + 1);
             fetchQuoteDelay();
         }, 120000);
         return () => {
@@ -25,7 +25,7 @@ function Quote() {
         axios.get(url)
             .then((res) => {
                 setQuote(res.data.slip.advice);
-                if (advice && advice.split(' ').length <= 8) {
+                if (advice && advice.split(' ').length <= 5) {
                     setQuote(advice);
                 } else {
                     fetchQuote();

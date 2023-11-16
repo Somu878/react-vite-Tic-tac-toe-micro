@@ -13,10 +13,11 @@
 }
 .wintitle{
     position: absolute;
+    color: #F7B336;
     font-family: var(--defaultfont);
     font-size: 30px;
     top:80px;
-    left: 120px;
+    left: 125px;
 }
 .quitbtn{
     position: absolute;
