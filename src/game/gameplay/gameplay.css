@@ -7,7 +7,7 @@
   --bglight: #1f3540;
 }
 .dialog{
-  position: absolute;
+  position: fixed;
   background-color: #192A32;
   width: 400px;
   height:222px ;

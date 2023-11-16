@@ -45,7 +45,6 @@ const cpu = <O />;
 const humanFromRedux = "X";
 const cpuFromRedux = "O";
 
-
 function Gameplay() {
   // useEffect(()=>{
   //   const humanFromRedux = UseSelector((state) => state.pickplayer.human);
@@ -54,12 +53,12 @@ function Gameplay() {
   // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
 
   // },[])
-  const [dialogvisible,setDialogvisible]= useState()
-  function handleClosedialog(){
-    setDialogvisible(false)
+  const [dialogvisible, setDialogvisible] = useState();
+  function handleClosedialog() {
+    setDialogvisible(false);
   }
-  const[Win,setWin] =useState()
-  const[dispIcon,setDispIcon] = useState()
+  const [Win, setWin] = useState();
+  const [dispIcon, setDispIcon] = useState();
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
@@ -94,14 +93,14 @@ function Gameplay() {
 
     const winner = calculateWinner(newSquares);
     if (winner) {
-      setDialogvisible(true)
-      setWin('WIN')
-      setDispIcon(human)
+      setDialogvisible(true);
+      setWin("WIN");
+      setDispIcon(human);
       setGameOver(true);
       if (!currPlayer) {
-        setHscore(hscore+1)
+        setHscore(hscore + 1);
       } else {
-        setCpscore(cpscore+1)
+        setCpscore(cpscore + 1);
       }
       return;
     }
@@ -115,7 +114,7 @@ function Gameplay() {
 
     if (emptySquares.length === 0) {
       setGameOver(true);
-      settieScore(tieScore+1)
+      settieScore(tieScore + 1);
       return;
     }
 
@@ -128,14 +127,14 @@ function Gameplay() {
     }
     const cpuWinner = calculateWinner(newSquares);
     if (cpuWinner) {
-      setWin('LOSE')
-      setDialogvisible(true)
-      setDispIcon(cpu)
+      setWin("LOSE");
+      setDialogvisible(true);
+      setDispIcon(cpu);
       setGameOver(true);
       if (currPlayer) {
-        setHscore(hscore+1)
+        setHscore(hscore + 1);
       } else {
-        setCpscore(cpscore+1)
+        setCpscore(cpscore + 1);
       }
     }
   };
@@ -159,11 +158,11 @@ function Gameplay() {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        return squares[a]; 
+        return squares[a];
       }
     }
 
-    return null; 
+    return null;
   };
 
   const restartGame = () => {
@@ -172,15 +171,21 @@ function Gameplay() {
     setGameOver(false);
   };
   return (
-    
     <div className="gameplay">
-      <DialogComponent className='dialog' icon={dispIcon} resetbtn={restartGame} status={Win} visibility={dialogvisible} closeDialog={handleClosedialog}/>
       <div className="xo">
         <div id="x"></div>
         <div id="o"></div>
       </div>
       <div className="turn">{humanFromRedux}'s TURN</div>
       <button className="resetbtn" onClick={restartGame}></button>
+      <DialogComponent
+        className="dialog"
+        icon={dispIcon}
+        resetbtn={restartGame}
+        status={Win}
+        visibility={dialogvisible}
+        closeDialog={handleClosedialog}
+      />
       <div className="gamesection">
         {squares.map((value, index) => (
           <Square key={index} value={value} onClick={() => XonClick(index)} />

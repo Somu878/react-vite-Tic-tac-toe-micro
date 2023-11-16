@@ -3,9 +3,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import "./dialog.css";
 import { Link } from "react-router-dom";
-export default function DialogComponent({ resetbtn, status,visibility,closeDialog ,icon }) {
-  
-
+export default function DialogComponent({ resetbtn, status,visibility,closeDialog,icon }) {
   return (
     <div>
       <Dialog visible={visibility} closable={false} className="dialog">
