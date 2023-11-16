@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DialogComponent from "./DialogComponent";
-        
 import "./gameplay.css";
 const X = styled.div`
   width: 50px;
@@ -46,18 +45,21 @@ const cpu = <O />;
 const humanFromRedux = "X";
 const cpuFromRedux = "O";
 
-  // const humanFromRedux = useSelector((state) => state.pickplayer.human);
-  // const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
 
+function Gameplay() {
+  // useEffect(()=>{
+  //   const humanFromRedux = UseSelector((state) => state.pickplayer.human);
+  // const cpuFromRedux = UseSelector((state) => state.pickplayer.cpu);
   // const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
   // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
 
-function Gameplay() {
+  // },[])
   const [dialogvisible,setDialogvisible]= useState()
   function handleClosedialog(){
     setDialogvisible(false)
   }
   const[Win,setWin] =useState()
+  const[dispIcon,setDispIcon] = useState()
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
@@ -94,6 +96,7 @@ function Gameplay() {
     if (winner) {
       setDialogvisible(true)
       setWin('WIN')
+      setDispIcon(human)
       setGameOver(true);
       if (!currPlayer) {
         setHscore(hscore+1)
@@ -127,6 +130,7 @@ function Gameplay() {
     if (cpuWinner) {
       setWin('LOSE')
       setDialogvisible(true)
+      setDispIcon(cpu)
       setGameOver(true);
       if (currPlayer) {
         setHscore(hscore+1)
@@ -170,7 +174,7 @@ function Gameplay() {
   return (
     
     <div className="gameplay">
-      <DialogComponent className='dialog' resetbtn={restartGame} status={Win} visibility={dialogvisible} closeDialog={handleClosedialog}/>
+      <DialogComponent className='dialog' icon={dispIcon} resetbtn={restartGame} status={Win} visibility={dialogvisible} closeDialog={handleClosedialog}/>
       <div className="xo">
         <div id="x"></div>
         <div id="o"></div>

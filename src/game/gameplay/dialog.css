@@ -2,6 +2,7 @@
 :root{
     --defaultfont:"DM Sans", sans-serif;
 }
+
 .winstatus{
     position: absolute;
     color: #ACC2CD;
@@ -15,7 +16,7 @@
     font-family: var(--defaultfont);
     font-size: 30px;
     top:80px;
-    left: 130px;
+    left: 120px;
 }
 .quitbtn{
     position: absolute;
@@ -29,6 +30,12 @@
     font-weight: bold;
     top: 150px;
     left: 60px;
+}
+.icon{
+    position: absolute;
+    left: 70px;
+    top: 65px;
+    transform: scale(0.7);
 }
 .playAgainbtn{
     position: absolute;
