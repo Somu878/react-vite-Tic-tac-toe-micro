@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,800&display=swap");
+:root{
+    --defaultfont:"DM Sans", sans-serif;
+}
+.winstatus{
+    position: absolute;
+    color: #ACC2CD;
+    font-family: var(--defaultfont);
+    font-size: 16px;
+    top: 30px;
+    left: 160px;
+}
+.wintitle{
+    position: absolute;
+    font-family: var(--defaultfont);
+    font-size: 30px;
+    top:80px;
+    left: 130px;
+}
+.quitbtn{
+    position: absolute;
+    width: 113px;
+    height: 33px;
+    background-color:#F7B336 ;
+    font-family: var(--defaultfont);
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    top: 150px;
+    left: 60px;
+}
+.playAgainbtn{
+    position: absolute;
+    width: 113px;
+    height: 33px;
+    background-color:#31C4BE ;
+    font-family: var(--defaultfont);
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    top: 150px;
+    left:250px;
+}

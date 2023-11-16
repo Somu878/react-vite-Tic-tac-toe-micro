@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import DialogComponent from "./DialogComponent";
+        
 import "./gameplay.css";
 const X = styled.div`
   width: 50px;
@@ -44,16 +45,19 @@ const human = <X />;
 const cpu = <O />;
 const humanFromRedux = "X";
 const cpuFromRedux = "O";
-// localStorage.setItem('humanScore','0')
-// localStorage.setItem('cpuScore','0')
 
-function Gameplay() {
   // const humanFromRedux = useSelector((state) => state.pickplayer.human);
   // const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
 
   // const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
   // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
 
+function Gameplay() {
+  const [dialogvisible,setDialogvisible]= useState()
+  function handleClosedialog(){
+    setDialogvisible(false)
+  }
+  const[Win,setWin] =useState()
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
@@ -88,6 +92,8 @@ function Gameplay() {
 
     const winner = calculateWinner(newSquares);
     if (winner) {
+      setDialogvisible(true)
+      setWin('WIN')
       setGameOver(true);
       if (!currPlayer) {
         setHscore(hscore+1)
@@ -119,6 +125,9 @@ function Gameplay() {
     }
     const cpuWinner = calculateWinner(newSquares);
     if (cpuWinner) {
+      setWin('LOSE')
+      setDialogvisible(true)
+      setGameOver(true);
       if (currPlayer) {
         setHscore(hscore+1)
       } else {
@@ -146,11 +155,11 @@ function Gameplay() {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        return squares[a]; // Return the symbol of the winner ('X' or 'O')
+        return squares[a]; 
       }
     }
 
-    return null; // Return null if there is no winner
+    return null; 
   };
 
   const restartGame = () => {
@@ -158,9 +167,10 @@ function Gameplay() {
     setCurrPlayer(false); // false for O
     setGameOver(false);
   };
-
   return (
+    
     <div className="gameplay">
+      <DialogComponent className='dialog' resetbtn={restartGame} status={Win} visibility={dialogvisible} closeDialog={handleClosedialog}/>
       <div className="xo">
         <div id="x"></div>
         <div id="o"></div>

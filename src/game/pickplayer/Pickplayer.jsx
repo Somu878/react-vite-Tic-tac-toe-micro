@@ -42,8 +42,6 @@ function Pickplayer() {
         <button className='ngvscpu' >NEW GAME (VS CPU)</button>
         </Link>
         <button className='ngvshuman' onClick={()=>{
-          console.log(human);
-          console.log(cpu);
         }}>NEW GAME (VS HUMAN) Coming soon</button>
         <button className='invitefriend' onClick={inviteToast}>Invite your friend</button>
         <ToastContainer/>
