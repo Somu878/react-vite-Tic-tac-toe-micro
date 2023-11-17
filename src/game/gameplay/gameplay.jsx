@@ -94,7 +94,7 @@ function Gameplay() {
     const winner = calculateWinner(newSquares);
     if (winner) {
       setDialogvisible(true);
-      setWin("WIN");
+      setWin("YOU WON");
       setDispIcon(human);
       setGameOver(true);
       if (!currPlayer) {
@@ -127,7 +127,7 @@ function Gameplay() {
     }
     const cpuWinner = calculateWinner(newSquares);
     if (cpuWinner) {
-      setWin("LOSE");
+      setWin("CPU WON");
       setDialogvisible(true);
       setDispIcon(cpu);
       setGameOver(true);

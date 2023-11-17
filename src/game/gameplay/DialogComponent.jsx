@@ -7,7 +7,7 @@ export default function DialogComponent({ resetbtn, status,visibility,closeDialo
   return (
     <div>
       <Dialog visible={visibility} closable={false} className="dialog">
-        <div className="winstatus">YOU {status}</div>
+        <div className="winstatus">{status}</div>
         <div className="icon">{icon}</div>
         <div className="wintitle"> TAKES THE GAME</div>
         <Link to={"/"}>
