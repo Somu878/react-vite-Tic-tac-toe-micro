@@ -8,7 +8,7 @@ function Quote() {
 
     useEffect(() => {
         const fetchQuoteDelay = () => {
-                fetchQuote();
+            fetchQuote();
         };
         fetchQuoteDelay();
         const interval = setInterval(() => {
@@ -24,9 +24,8 @@ function Quote() {
         let url = `https://api.adviceslip.com/advice`;
         axios.get(url)
             .then((res) => {
-                setQuote(res.data.slip.advice);
-                if (advice && advice.split(' ').length <= 5) {
-                    setQuote(advice);
+                if (res.data.slip.advice && res.data.slip.advice.split(' ').length <= 12) {
+                    setQuote(res.data.slip.advice);
                 } else {
                     fetchQuote();
                 }

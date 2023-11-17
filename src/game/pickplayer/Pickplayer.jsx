@@ -30,8 +30,8 @@ function Pickplayer() {
   return (
     <div className='pickplayer' >
         <div className='logo'>
-            <div id='X'></div>
-            <div id='O'></div>
+            <div id='x'></div>
+            <div id='o'></div>
         </div>
         <div className='pickplaybtns'>
             <div className='title'>PICK PLAYER</div>
