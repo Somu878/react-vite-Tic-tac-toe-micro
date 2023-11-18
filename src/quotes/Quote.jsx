@@ -27,7 +27,7 @@ function Quote() {
         setQuoteNumber(res.data.slip.id);
         if (
           res.data.slip.advice &&
-          res.data.slip.advice.split(" ").length <= 12
+          res.data.slip.advice.split(" ").length <= 9
         ) {
           setQuote(res.data.slip.advice);
         } else {
