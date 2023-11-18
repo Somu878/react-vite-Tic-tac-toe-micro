@@ -55,6 +55,7 @@
 .xobtns {
   margin-left: 15px;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   width: 276px;
   height: 45px;
@@ -63,73 +64,113 @@
   border-radius: 5px;
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
-#xbtn,#obtn{
-    color: #D9D9D9;
-    background-color: transparent;
-    margin-top: 8px;
-    height: 30px;
-    width: 120px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    font-weight: bolder;
-    font-size: 25px;
-    font-style: normal;
+#oid {
+  margin-left: 25px;
+  margin-top: -15px;
+  width: 30px;
+  height: 30px;
+  border: 15px solid #d9d9d9;
+  border-radius: 50%;
+  transform: scale(0.4);
 }
-#xbtn:hover{
-    color:#192A32 ;
-    background-color:#D9D9D9 ;
+#xid {
+  width: 25px;
+  height: 25px;
+  margin-left: 40px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0,
+    50% 30%
+  );
 }
-#obtn:hover{
-    color:#192A32 ;
-    background-color:#D9D9D9 ;
+#oid.active {
+  border-color: #192a32;
 }
-
-.ngvscpu{
-    position: absolute;
-    top:400px;
-    left: 55px;
-    width: 307px;
-    height: 40px;
-    border-radius: 5px;
-    background-color: #F2B237;
-    font-family: "DM Sans", sans-serif;
-    font-size: 14px;
-    border: none;
-}
-.ngvshuman{
-    position: absolute;
-    top:460px;
-    left: 55px;
-    width: 307px;
-    height: 40px;
-    border-radius: 5px;
-    background-color: #32C4C3;
-    font-family: "DM Sans", sans-serif;
-    font-size: 14px;
-    border: none;
-
+#xid.active {
+  background-color: #192a32;
 }
 
-.invitefriend{
-    position: absolute;
-    top:580px;
-    left: 95px;
-    width: 225px;
-    height: 40px;
-    border-radius: 5px;
-    background-color:#F2B237;;
-    font-family: "DM Sans", sans-serif;
-    font-size: 14px;
-    border: none;
+#xbtn,
+#obtn {
+  color: #d9d9d9;
+  background-color: transparent;
+  margin-top: 8px;
+  height: 30px;
+  width: 120px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-weight: bolder;
+  font-size: 25px;
+  font-style: normal;
+}
+#xbtn,
+#obtn {
+  transition: color 0.3s, background-color 0.3s;
+  cursor: pointer;
 }
 
-.invite-toast{
-    left: 50px;
-    background-color: #192A32;
-    color: #F2B237;
-    font-size:20px;
-    font-family: "DM Sans", sans-serif;
-    text-align: center;
-    border-radius: 10px;
+#xbtn.active,
+#obtn.active {
+  color: #192a32;
+  background-color: #d9d9d9;
+}
+
+.ngvscpu {
+  position: absolute;
+  top: 400px;
+  left: 55px;
+  width: 307px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #f2b237;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  border: none;
+}
+.ngvshuman {
+  position: absolute;
+  top: 460px;
+  left: 55px;
+  width: 307px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #32c4c3;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  border: none;
+}
+
+.invitefriend {
+  position: absolute;
+  top: 580px;
+  left: 95px;
+  width: 225px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #f2b237;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  border: none;
+}
+
+.invite-toast {
+  left: 50px;
+  background-color: #192a32;
+  color: #f2b237;
+  font-size: 20px;
+  font-family: "DM Sans", sans-serif;
+  text-align: center;
+  border-radius: 10px;
 }

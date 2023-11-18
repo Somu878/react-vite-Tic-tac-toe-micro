@@ -1,11 +1,7 @@
 import './App.css'
 import Quote from './quotes/Quote'
 import Game from './game/game'
-import { PrimeReactProvider } from 'primereact/api';
-
-//theme
-
-        
+import { PrimeReactProvider } from 'primereact/api'; 
 function App() {
 
   return (
