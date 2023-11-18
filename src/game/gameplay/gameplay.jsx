@@ -79,7 +79,7 @@ function Gameplay() {
     localStorage.setItem("cpuScore", cpscore.toString());
     localStorage.setItem("tieScore", tieScore.toString());
   }, [hscore, cpscore, tieScore]);
-  const XonClick = (index) => {
+  const squareOnClick = (index) => {
     if (gameOver || squares[index]) {
       return;
     }
@@ -186,7 +186,7 @@ function Gameplay() {
       />
       <div className="gamesection">
         {squares.map((value, index) => (
-          <Square key={index} value={value} onClick={() => XonClick(index)} />
+          <Square key={index} value={value} onClick={() => squareOnClick(index)} />
         ))}
       </div>
       <div className="scoresection">
