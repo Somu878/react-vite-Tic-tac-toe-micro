@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import DialogComponent from "./DialogComponent";
+import DialogComponent from "./dialogs/DialogComponent";
 import { useSelector } from 'react-redux'
 import "./gameplay.css";
 const X = styled.div`
@@ -41,24 +41,26 @@ function Square({ value, onClick }) {
     </button>
   );
 }
-// const human = <X />;
-// const cpu = <O />;
-// const humanFromRedux = "X";
-// const cpuFromRedux = "O";
+const human = <X />;
+const cpu = <O />;
+const humanFromRedux = "X";
+const cpuFromRedux = "O";
 
 function Gameplay() {
-  const humanFromRedux = useSelector((state) => state.pickplayer.human);
-  const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
-  const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
-  const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
-  useEffect(()=>{
-  },[humanFromRedux,cpuFromRedux])
+  // const humanFromRedux = useSelector((state) => state.pickplayer.human);
+  // const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
+  // const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
+  // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
+  // useEffect(()=>{
+  // },[humanFromRedux,cpuFromRedux])
   const [dialogvisible, setDialogvisible] = useState();
   function handleClosedialog() {
     setDialogvisible(false);
+    setdispRefresh(false)
   }
   const [Win, setWin] = useState();
   const [dispIcon, setDispIcon] = useState();
+  const [dispRefresh,setdispRefresh] =useState()
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
   const [gameOver, setGameOver] = useState(false);
@@ -116,25 +118,28 @@ function Gameplay() {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * emptySquares.length);
-    const cpuMove = emptySquares[randomIndex];
-    if (cpuMove !== undefined) {
-      newSquares[cpuMove] = cpu;
-      setSquares(newSquares);
-      setCurrPlayer(!human);
-    }
-    const cpuWinner = calculateWinner(newSquares);
-    if (cpuWinner) {
-      setWin("CPU WON");
-      setDialogvisible(true);
-      setDispIcon(cpu);
-      setGameOver(true);
-      if (currPlayer) {
-        setHscore(hscore + 1);
-      } else {
-        setCpscore(cpscore + 1);
+    setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * emptySquares.length);
+      const cpuMove = emptySquares[randomIndex];
+      if (cpuMove !== undefined) {
+        newSquares[cpuMove] = cpu;
+        setSquares(newSquares);
+        setCurrPlayer(!human);
+  
+        const cpuWinner = calculateWinner(newSquares);
+        if (cpuWinner) {
+          setWin("CPU WON");
+          setDialogvisible(true);
+          setDispIcon(cpu);
+          setGameOver(true);
+          if (currPlayer) {
+            setHscore(hscore + 1);
+          } else {
+            setCpscore(cpscore + 1);
+          }
+        }
       }
-    }
+    }, 500); 
   };
 
   const calculateWinner = (squares) => {
@@ -175,7 +180,7 @@ function Gameplay() {
         <div id="o"></div>
       </div>
       <div className="turn">{humanFromRedux} TURN</div>
-      <button className="resetbtn" onClick={restartGame}></button>
+      <button className="resetbtn" onClick={() => setdispRefresh(true)}></button>
       <DialogComponent
         className="dialog"
         icon={dispIcon}

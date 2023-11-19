@@ -21,4 +21,13 @@ body {
   right: 500px;
   bottom: 42px;
 }
+@media (max-width: 768px) {
+  .quotecomponent {
+    display: none; /* Hide quotecomponent on mobile screens */
+  }
 
+  .gamecomponent {
+    position: static; /* Change position to static for normal document flow */
+    margin-left: -10px; /* Adjust spacing as needed */
+  }
+}

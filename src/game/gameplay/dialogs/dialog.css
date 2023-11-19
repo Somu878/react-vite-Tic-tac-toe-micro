@@ -38,7 +38,29 @@
     top: 65px;
     transform: scale(0.7);
 }
-.playAgainbtn{
+.nextRoundbtn{
+    position: absolute;
+    width: 113px;
+    height: 33px;
+    background-color:#31C4BE ;
+    font-family: var(--defaultfont);
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    top: 150px;
+    left:250px;
+}
+.confirmation{
+    position: absolute;
+    color: #F7B336;
+    font-family: var(--defaultfont);
+    font-size: 30px;
+    top:80px;
+    left: 0px;
+}
+
+.newgamebtn{
     position: absolute;
     width: 113px;
     height: 33px;

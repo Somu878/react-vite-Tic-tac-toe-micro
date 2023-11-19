@@ -6,11 +6,12 @@
   --dmsans: "DM Sans", sans-serif;
   --bglight: #1f3540;
 }
-.dialog{
-  position: fixed;
+.dialog,
+.refreshDialog {
+  position: absolute;
   background-color: #192A32;
   width: 400px;
-  height:222px ;
+  height: 222px;
   margin-left: 10px;
 }
 
