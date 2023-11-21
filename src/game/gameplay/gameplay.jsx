@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DialogComponent from "./dialogs/DialogComponent";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import "./gameplay.css";
+
 const X = styled.div`
   width: 50px;
   height: 50px;
@@ -34,74 +35,62 @@ const O = styled.div`
   transform: scale(0.7);
 `;
 
-function Square({ value, onClick }) {
-  return (
-    <button className="square" onClick={onClick}>
-      {value}
-    </button>
-  );
-}
-const human = <X />;
-const cpu = <O />;
-const humanFromRedux = "X";
-const cpuFromRedux = "O";
+const Square = ({ value, onClick }) => (
+  <button className="square" onClick={onClick}>
+    {value}
+  </button>
+);
+// const human = <X />;
+// const cpu = <O />;
+// const humanFromRedux = "X";
+// const cpuFromRedux = "O";
+const Gameplay = () => {
+  const humanFromRedux = useSelector((state) => state.pickplayer.human);
+  const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
 
-function Gameplay() {
-  // const humanFromRedux = useSelector((state) => state.pickplayer.human);
-  // const cpuFromRedux = useSelector((state) => state.pickplayer.cpu);
-  // const human = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
-  // const cpu = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
-  // useEffect(()=>{
-  // },[humanFromRedux,cpuFromRedux])
-  const [dialogvisible, setDialogvisible] = useState();
-  function handleClosedialog() {
-    setDialogvisible(false);
-    setdispRefresh(false)
-  }
-  const [Win, setWin] = useState();
+  const humanIcon = humanFromRedux === "X" || cpuFromRedux === "O" ? <X /> : <O />;
+  const cpuIcon = humanFromRedux === "X" || cpuFromRedux === "O" ? <O /> : <X />;
+
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [win, setWin] = useState();
   const [dispIcon, setDispIcon] = useState();
-  const [dispRefresh,setdispRefresh] =useState()
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [currPlayer, setCurrPlayer] = useState(!cpu); // false for O
+  const [currPlayer, setCurrPlayer] = useState(false); // false for O
   const [gameOver, setGameOver] = useState(false);
-  const [hscore, setHscore] = useState(() => {
-    const storedHscore = localStorage.getItem("humanScore");
-    return storedHscore ? parseInt(storedHscore, 10) : 0;
-  });
-  const [cpscore, setCpscore] = useState(() => {
-    const storedCpscore = localStorage.getItem("cpuScore");
-    return storedCpscore ? parseInt(storedCpscore, 10) : 0;
-  });
-  const [tieScore, settieScore] = useState(() => {
-    const storedTieScore = localStorage.getItem("tieScore");
-    return storedTieScore ? parseInt(storedTieScore, 10) : 0;
-  });
+  const [hscore, setHscore] = useState(() => parseInt(localStorage.getItem("humanScore"), 10) || 0);
+  const [cpscore, setCpscore] = useState(() => parseInt(localStorage.getItem("cpuScore"), 10) || 0);
+  const [tieScore, setTieScore] = useState(() => parseInt(localStorage.getItem("tieScore"), 10) || 0);
+
   useEffect(() => {
     localStorage.setItem("humanScore", hscore.toString());
     localStorage.setItem("cpuScore", cpscore.toString());
     localStorage.setItem("tieScore", tieScore.toString());
   }, [hscore, cpscore, tieScore]);
-  const squareOnClick = (index) => {
+
+  const handleSquareClick = (index) => {
     if (gameOver || squares[index]) {
       return;
     }
 
     const newSquares = [...squares];
-    newSquares[index] = currPlayer ? cpu : human;
+    newSquares[index] = currPlayer ? cpuIcon : humanIcon;
     setSquares(newSquares);
-    setCurrPlayer(!currPlayer);
+    setCurrPlayer((prevPlayer) => !prevPlayer);
 
     const winner = calculateWinner(newSquares);
+
     if (winner) {
-      setDialogvisible(true);
-      setWin("YOU WON");
-      setDispIcon(human);
+      setDialogVisible(true);
+      setWin(winner === humanIcon ? "YOU WON" : "CPU WON");
+      setDispIcon(winner === humanIcon ? "X" : "O");
       setGameOver(true);
-      if (!currPlayer) {
-        setHscore(hscore + 1);
+
+      if (winner === humanIcon) {
+        setHscore((prevScore) => prevScore + 1);
       } else {
-        setCpscore(cpscore + 1);
+        setCpscore((prevScore) => prevScore + 1);
       }
+
       return;
     }
 
@@ -114,32 +103,29 @@ function Gameplay() {
 
     if (emptySquares.length === 0) {
       setGameOver(true);
-      settieScore(tieScore + 1);
+      setTieScore((prevScore) => prevScore + 1);
       return;
     }
 
+    // Calculate CPU move after human move
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * emptySquares.length);
       const cpuMove = emptySquares[randomIndex];
       if (cpuMove !== undefined) {
-        newSquares[cpuMove] = cpu;
+        newSquares[cpuMove] = cpuIcon;
         setSquares(newSquares);
-        setCurrPlayer(!human);
-  
+        setCurrPlayer((prevPlayer) => !prevPlayer);
+
         const cpuWinner = calculateWinner(newSquares);
         if (cpuWinner) {
           setWin("CPU WON");
-          setDialogvisible(true);
-          setDispIcon(cpu);
+          setDialogVisible(true);
+          setDispIcon("O");
           setGameOver(true);
-          if (currPlayer) {
-            setHscore(hscore + 1);
-          } else {
-            setCpscore(cpscore + 1);
-          }
+          setCpscore((prevScore) => prevScore + 1);
         }
       }
-    }, 500); 
+    }, 500);
   };
 
   const calculateWinner = (squares) => {
@@ -156,11 +142,7 @@ function Gameplay() {
 
     for (const line of lines) {
       const [a, b, c] = line;
-      if (
-        squares[a] &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
-      ) {
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
         return squares[a];
       }
     }
@@ -173,25 +155,26 @@ function Gameplay() {
     setCurrPlayer(false); // false for O
     setGameOver(false);
   };
+
   return (
     <div className="gameplay">
-      <div className="xo">
-        <div id="x"></div>
-        <div id="o"></div>
-      </div>
-      <div className="turn">{humanFromRedux} TURN</div>
-      <button className="resetbtn" onClick={() => setdispRefresh(true)}></button>
       <DialogComponent
         className="dialog"
         icon={dispIcon}
         resetbtn={restartGame}
-        status={Win}
-        visibility={dialogvisible}
-        closeDialog={handleClosedialog}
+        status={win}
+        visibility={dialogVisible}
+        closeDialog={() => setDialogVisible(false)}
       />
+      <div className="xo">
+        <div id="x"></div>
+        <div id="o"></div>
+      </div>
+      <div className="turn">{!currPlayer ? `${humanFromRedux} TURN` : `${cpuFromRedux} TURN`}</div>
+      <button className="resetbtn" onClick={() => setDispRefresh(true)}></button>
       <div className="gamesection">
         {squares.map((value, index) => (
-          <Square key={index} value={value} onClick={() => squareOnClick(index)} />
+          <Square key={index} value={value} onClick={() => handleSquareClick(index)} />
         ))}
       </div>
       <div className="scoresection">
@@ -210,6 +193,6 @@ function Gameplay() {
       </div>
     </div>
   );
-}
+};
 
 export default Gameplay;

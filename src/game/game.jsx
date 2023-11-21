@@ -6,7 +6,6 @@ import './game.css'
 function Game() {
   return (
     <div className='gamecomponent'>
-       
       <Router>
         <Routes>
           <Route path="/" element={<Pickplayer />} />

@@ -1,8 +1,14 @@
 import React from "react";
+
 import { Dialog } from "primereact/dialog";
 import "./dialog.css";
 import { Link } from "react-router-dom";
 export default function DialogComponent({ resetbtn, status,visibility,closeDialog,icon }) {
+  const resetScores=()=>{
+      localStorage.setItem("humanScore",'0');
+      localStorage.setItem("cpuScore", '0');
+      localStorage.setItem("tieScore",'0');
+  }
   return (
     <div>
       <Dialog visible={visibility} closable={false} className="dialog">
@@ -11,9 +17,7 @@ export default function DialogComponent({ resetbtn, status,visibility,closeDialo
         <div className="wintitle"> TAKES THE GAME</div>
         <Link to={"/"}>
           <button className="quitbtn" onClick={()=>{
-             localStorage.setItem("humanScore",'0');
-             localStorage.setItem("cpuScore", '0');
-             localStorage.setItem("tieScore",'0');
+           resetScores()
           }}
           >QUIT</button>
         </Link>

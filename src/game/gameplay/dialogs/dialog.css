@@ -2,7 +2,9 @@
 :root{
     --defaultfont:"DM Sans", sans-serif;
 }
-
+body{
+    background-color: rgba(200, 200,200);
+}
 .winstatus{
     position: absolute;
     color: #ACC2CD;
